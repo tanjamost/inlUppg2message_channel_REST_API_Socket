@@ -16,12 +16,29 @@ public class ChannelSocketHandler extends TextWebSocketHandler {
 
     private List<WebSocketSession> sessions = new ArrayList<>();
 
+    @Override
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) {
+        broadcast(message.getPayload(), session);
+    }
+
+    public void broadcast(String message, WebSocketSession webSocketSession){
+        try {
+            for (WebSocketSession webSession :sessions) {
+                if(!webSocketSession.equals(webSession)) {
+                    webSession.sendMessage(new TextMessage(message));
+                }
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public void broadcast(ChannelDetails channelDetails){
        try {
            for (WebSocketSession webSession : sessions){
 
                {
-                    webSession.sendMessage(new TextMessage("Channel" + channelDetails.getTitle() + "was created with id" + channelDetails.getId()));       //channel created
+                    webSession.sendMessage(new TextMessage("Channel" + channelDetails.getTitle() + " created channel with id:  " + channelDetails.getId()));       //channel created
                }
            }
        } catch(IOException ex){
@@ -32,13 +49,13 @@ public class ChannelSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {      //create session
         sessions.add(session);
-        System.out.println("Created new session");
+        System.out.println(" Created new session ");
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status){        //delete session
         sessions.remove(session);
-        System.out.println("Deleted session");
+        System.out.println(" Deleted session ");
 
     }
 
