@@ -19,8 +19,8 @@ public class SocketConfig implements WebSocketConfigurer {
     private final static String SOCKET_PREFIX = "/sub";
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(channelSocketHandler, SOCKET_PREFIX + "/channels");         //main channel
-        registry.addHandler(messageRoomSocketHandler, SOCKET_PREFIX + "/chat ");
+        registry.addHandler(channelSocketHandler, SOCKET_PREFIX + "/channels/");         //main channel
+        registry.addHandler(messageRoomSocketHandler, SOCKET_PREFIX + "/chat/");
 
     }
 }

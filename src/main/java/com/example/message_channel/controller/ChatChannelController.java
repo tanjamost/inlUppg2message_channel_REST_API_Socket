@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/channels")
+@RequestMapping("/channels/")
 public class ChatChannelController {
     private ChannelService channelService;
     private ChannelSocketHandler channelSocketHandler;
