@@ -15,16 +15,16 @@ import java.util.Map;
 @Component
 public class MessageRoomSocketHandler extends TextWebSocketHandler {
 
-    private Map<String, List<WebSocketSession>> sessions = new HashMap<>();         //session list for varje chat
+    private Map<String, List<WebSocketSession>> sessions = new HashMap<>();                         //session list for varje chat
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
-        broadcast(session.getHandshakeHeaders().getFirst(" id "), message.getPayload(), session);       //broadcast
+        broadcast(session.getHandshakeHeaders().getFirst("id"), message.getPayload(), session);
     }
 
     public void broadcast(String channel, String message, WebSocketSession webSocketSession) {
         try{
-            for(WebSocketSession webSession : sessions.get(channel) ){                              //broadcast medd for deltagare
+            for(WebSocketSession webSession : sessions.get(channel) ){                              //broadcast (medd for deltagare)
                 if(!webSocketSession.equals(webSession)){
                    webSession.sendMessage(new TextMessage(message));
                 }
@@ -43,7 +43,13 @@ public class MessageRoomSocketHandler extends TextWebSocketHandler {
         }
         list.add(session);
         sessions.put(id, list );
-        System.out.println(" CREATED NEW SESSION ");
+        System.out.println(" CREATED new session ");
+
+        try {
+            session.sendMessage(new TextMessage("CONNECTED to chat with id: " + id ));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -51,9 +57,7 @@ public class MessageRoomSocketHandler extends TextWebSocketHandler {
         String id = session.getHandshakeHeaders().getFirst("id");
         List<WebSocketSession> list = sessions.get(id);
         list.remove(session);
-        System.out.println(" DELETED SESSION " );
+        System.out.println(" DELETED session " );
     }
-
-
 
 }
