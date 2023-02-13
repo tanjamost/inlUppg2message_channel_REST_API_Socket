@@ -1,7 +1,12 @@
-#**Rest CRUD & Sockets**
+#**Backend programmering inlämningsuppgift 2**
 
-Studerande ska redovisa förmågan att implementera CRUD operationerna via ett REST API med realtidsuppdateringar via socket kanaler. 
+**Realtids chat med REST endpoints.**
 
+*Individuellt projekt med Web sockets och Spring REST*
+
+#*Rest CRUD & Sockets*
+
+Implementera CRUD operationerna via ett REST API med realtidsuppdateringar via socket kanaler. 
 Observera att du förväntas använda databaslösningar i uppgiften där det är lämpligt.
 
 #**HEADER PARAMETRAR ANVÄNDS för att aktivera chat (key, value).**
